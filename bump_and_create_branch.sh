@@ -9,11 +9,11 @@ fi
 # Pedir el nombre de la funcionalidad
 read -p "Introduce el nombre de la funcionalidad: " FEATURE_NAME
 
-# Ejecutar bumpversion
-bumpversion $1
+# Ejecutar bumpversion (o npm version para actualizar la versión en package.json)
+npm version $1 --no-git-tag-version
 
-# Obtener la nueva versión
-NEW_VERSION=$(python -c "import re; f=open('setup.py'); print(re.search(r'version=\'([^\']+)', f.read()).group(1)); f.close()")
+# Obtener la nueva versión del package.json
+NEW_VERSION=$(jq -r '.version' package.json)
 
 # Crear la rama según la convención
 if [ "$1" == "minor" ]; then
@@ -30,9 +30,6 @@ git checkout -b "$BRANCH_NAME"
 # Hacer el commit con el nombre de la funcionalidad
 git add .
 git commit -m "$1: $FEATURE_NAME"
-
-# Generar changelog
-./generate_changelog.sh
 
 # Hacer push de la nueva rama
 git push origin "$BRANCH_NAME"
