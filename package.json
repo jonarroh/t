@@ -8,7 +8,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "minor": "./bump_and_create_branch.sh minor"
+    "minor": "./bump_and_create_branch.sh minor",
+    "major": "./bump_and_create_branch.sh major",
+    "patch": "./bump_and_create_branch.sh patch",
+    "commit": "./bump_and_create_branch.sh commit"
   },
   "dependencies": {
     "react": "^18.3.1",
